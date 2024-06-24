@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Events </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/fontawesome.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            
+        }
+
+        body{
+            background-image: url('../static/images/home.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .timeline{
+            position: relative;
+            max-width: 1200px;
+            margin: 100px auto;
+        }
+
+        .text-box{
+            padding: 20px 30px;
+            background: #fff;
+            position: relative;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .container{
+            padding: 10px 50px;
+            position: relative;
+            width: 60%;
+            animation: movedown 1s linear forwards;
+            
+        }
+        @keyframes movedown {
+            0%{
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100%{
+                opacity: 1;
+                transform: translateY(0px);
+            }
+        }
+
+        .left-container{
+            left:-10%;
+        }
+
+        .right-container{
+            left: 50%;
+        }
+
+        .timeline::after{
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 100%;
+            background: #fff;
+            left: 50%;
+            top: 0;
+            margin-left: -3px;
+            z-index: -1;
+            animation: moveline 6s linear forwards;
+        }
+
+        @keyframes moveline{
+            0%{
+                height: 0;
+            }
+            100%{
+                height: 100%;
+            }
+        }
+
+        .text-box{
+            background: #F5E8DD;
+        }
+
+        .text-box h2{
+            font-weight: 600;
+        }
+
+        .text-box small{
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .left-container-arrow{
+            height: 0;
+            width: 0;
+            position: absolute;
+            top: 28px;
+            z-index: 1;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 15px solid #fff;
+            right: -15px;
+        }
+
+        .right-container-arrow{
+            height: 0;
+            width: 0;
+            position: absolute;
+            top: 28px;
+            z-index: 1;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-right: 15px solid #fff;
+            left: -14px;
+            
+        }
+
+        .imm{
+            position: absolute;
+            width: 40px;
+            border-radius: 100%;
+            right: -20px;
+            top: 32px;
+            z-index: 10;
+        }
+
+        .right-container .imm{
+            left: -20px;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 12px 34px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 15px;
+            margin-left: 5px;
+            background: black;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .hero-btn:hover {
+            border: 1px solid #fff;
+            background: #fff;
+            transition: 1s;
+            text-decoration: none;
+            color: #111;
+        }
+
+        .disabled {
+            pointer-events: none;
+            cursor: default;
+            background-color: green
+        }
+
+        .disabled-closed {
+            pointer-events: none;
+            cursor: default;
+            background-color: grey
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <a href="{{ url_for('afterloginstudent') }}" class="hero-btn">BACK</a>
+
+    <div class="timeline">
+
+        {% for i in range(0, length)%}
+            {% if i%2 == 0 %}
+                <div class="container left-container">
+                    <img src="../static/images/dot.png" class = "imm">
+                    <div class="text-box">
+                        <h2>{{events[i][1]}}</h2>
+                        <small>{{events[i][2]}}</small>
+                        <p>{{events[i][3]}}</p>
+
+                        {% if events[i][0] in blocks %}
+                        <a href="javascript:void(0);" class="hero-btn disabled-closed" disabled>CLOSED!</a>
+                        {% elif events[i][0] not in regevents %}
+                        <a href="{{ url_for('eventstudent', event_id1 = events[i][0]) }}" class="hero-btn">REGISTER</a>
+                        {% else %}
+                        <a href="javascript:void(0);" class="hero-btn disabled" disabled>REGISTERED!</a>
+                        <a href="{{ url_for('event', event_id3 = events[i][0]) }}" class="hero-btn">DEREGISTER</a>
+                        {% endif %}
+
+                        {% if events[i][0] in blocks %}
+                        <a href="javascript:void(0);" class="hero-btn disabled-closed" disabled>CLOSED!</a>
+                        {% elif events[i][0] not in regvols %}
+                        <a href="{{ url_for('eventstudent', event_id2 = events[i][0]) }}" class="hero-btn">VOLUNTEER</a>
+                        {% else %}
+                        <a href="javascript:void(0);" class="hero-btn disabled" disabled>VOLUNTEERED!</a>
+                        {% endif %}
+                        <a href="{{ url_for('winnerdisplaystudent', event_id3 = events[i][0]) }}" class="hero-btn">WINNERS</a>
+                        <span class="left-container-arrow"></span>
+                    </div>
+                </div>
+            {% else %}
+                <div class="container right-container">
+                    <img src="../static/images/dot.png" class = "imm">
+                    <div class="text-box ">
+                        <h2>{{events[i][1]}}</h2>
+                        <small>{{events[i][2]}}</small>
+                        <p>{{events[i][3]}}</p>
+                        {% if events[i][0] in blocks %}
+                        <a href="javascript:void(0);" class="hero-btn disabled-closed" disabled>CLOSED!</a>
+                        {% elif events[i][0] not in regevents %}
+                        <a href="{{ url_for('eventstudent', event_id1 = events[i][0]) }}" class="hero-btn">REGISTER</a>
+                        {% else %}
+                        <a href="javascript:void(0);" class="hero-btn disabled" disabled>REGISTERED!</a>
+                        <a href="{{ url_for('event', event_id3 = events[i][0]) }}" class="hero-btn">DEREGISTER</a>
+                        {% endif %}
+
+                        {% if events[i][0] in blocks %}
+                        <a href="javascript:void(0);" class="hero-btn disabled-closed" disabled>CLOSED!</a>
+                        {% elif events[i][0] not in regvols %}
+                        <a href="{{ url_for('eventstudent', event_id2 = events[i][0]) }}" class="hero-btn">VOLUNTEER</a>
+                        {% else %}
+                        <a href="javascript:void(0);" class="hero-btn disabled" disabled>VOLUNTEERED!</a>
+                        {% endif %}
+                        <a href="{{ url_for('winnerdisplaystudent', event_id3 = events[i][0]) }}" class="hero-btn">WINNERS</a>
+                        <span  class="right-container-arrow"></span>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        
+
+        
+    </div>
+
+    
+
+        

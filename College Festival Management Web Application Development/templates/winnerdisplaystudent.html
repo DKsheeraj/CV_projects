@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Events </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/fontawesome.min.css">
+    <style>
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('/static/images/winner_image.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 100px auto;
+            background-color: rgba(255, 255, 255, 0.8);
+             
+            padding: 20px;
+            border-radius: 10px;
+            
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        .winners {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .winner {
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+        
+        .gold {
+            background-color: gold;
+        }
+        
+        .silver {
+            background-color: silver;
+        }
+        
+        .bronze {
+            background-color: #cd7f32; /* Bronze color */
+        }
+        
+        .buttons {
+            text-align: center;
+        }
+        
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }    
+        
+
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h1>{{db[0][0]}}</h1>
+        <div class="winners">
+            <div class="winner gold">{{dbgold[0][0]}}</div>
+            <div class="winner silver">{{dbsilver[0][0]}}</div>
+            <div class="winner bronze">{{dbbronze[0][0]}}</div>
+        </div>
+        <div class="buttons">
+            
+            <a href="{{ url_for('afterloginstudent') }}"> <button>Home</button></a>
+            <a href="{{ url_for('eventstudent') }}"><button>Back</button>
+        </div>
+    </div>
+</body>
+</html>
+
+    
+
+        
